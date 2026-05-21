@@ -1,6 +1,7 @@
 import {
   Text,
   Image,
+  View,StyleSheet,Button
 } from 'react-native';
 
 const Carte=[
@@ -55,3 +56,48 @@ const Carte=[
   { id: 49, nome: "Farsi annullare la tesi il giorno prima della consegna per presunto plagio", indice: 98.5, immagine: "https://picsum.photos/id/992/200/200" },
   { id: 50, nome: "Svegliarsi con la febbre a 40 il giorno della proclamazione di laurea", indice: 100.0, immagine: "https://picsum.photos/id/1050/200/200" },
 ];
+
+export default function App()
+{
+  return(
+    <View style={styles.container}>
+    <Text style={styles.testoContainer}>
+    Gioco della sfortuna
+    </Text>
+    <Text style={styles.testoIntro}>
+    Il tema del gioco è: Vita universitaria
+    </Text>
+    <Text style={styles.testoDescrizione}>
+    Inserisci la giusta collocazione delle carte per proseguire,arriva a 6 carte per vincere ma attenzione,puoi commettere solo 3 errori!
+    </Text>
+    <Button title="Inizia il gioco" onPress={() => {}} />
+    </View>
+  );
+}
+
+const styles=StyleSheet.create({
+
+container:{
+  justifyContent:"center",
+  alignItems:"center",
+  flex:1
+},
+testoContainer:{
+  fontSize:30,
+  fontWeight:"bold",
+  textAlign:"center",
+  marginBottom:10
+},
+testoIntro:{
+  fontSize:18,
+  textAlign:"center",
+  marginBottom:25
+},
+testoDescrizione:{
+  fontSize:15,
+  textAlign:"center",
+  marginBottom:36
+
+}
+
+})

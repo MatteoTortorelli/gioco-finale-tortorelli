@@ -1,10 +1,14 @@
+import React, { useState } from 'react';
 import {
   Text,
   Image,
-  View,StyleSheet,Button
+  View,
+  StyleSheet,
+  Button,
+  ScrollView
 } from 'react-native';
 
-const Carte=[
+const Carte = [
   { id: 1, nome: "Finisce l'inchiostro dell'evidenziatore preferito", indice: 2.0, immagine: "https://picsum.photos/id/24/200/200" },
   { id: 2, nome: "La macchinetta del caffè non dà il resto", indice: 4.5, immagine: "https://picsum.photos/id/30/200/200" },
   { id: 3, nome: "Arrivare a lezione e scoprire che è stata rimandata", indice: 6.0, immagine: "https://picsum.photos/id/42/200/200" },
@@ -40,7 +44,7 @@ const Carte=[
   { id: 33, nome: "Perdere la chiavetta USB con l'unica copia del progetto finale", indice: 71.0, immagine: "https://picsum.photos/id/611/200/200" },
   { id: 34, nome: "Il portale della borsa di studio va in crash a 5 minuti dalla scadenza", indice: 73.5, immagine: "https://picsum.photos/id/646/200/200" },
   { id: 35, nome: "Trovarsi nel gruppo di studio con l'incompetente della facoltà", indice: 75.0, immagine: "https://picsum.photos/id/660/200/200" },
-  { id: 36, nome: "Rimanere bloccato nell'ascensore della facoltà prima dell'orale", indice: 77.5, immagine: "https://picsum.photos/id/690/200/200" },
+  { id: 36, nexus: "Rimanere bloccato nell'ascensore della facoltà prima dell'orale", indice: 77.5, immagine: "https://picsum.photos/id/690/200/200" },
   { id: 37, nome: "Il professore perde il tuo compito scritto e devi rifarlo", indice: 79.0, immagine: "https://picsum.photos/id/703/200/200" },
   { id: 38, nome: "Mancare il quorum dei crediti per la borsa di studio per 1 CFU", indice: 81.5, immagine: "https://picsum.photos/id/735/200/200" },
   { id: 39, nome: "Prendere 30 e lode ma scoprire che il verbale è stato registrato come 18", indice: 83.0, immagine: "https://picsum.photos/id/765/200/200" },
@@ -57,47 +61,162 @@ const Carte=[
   { id: 50, nome: "Svegliarsi con la febbre a 40 il giorno della proclamazione di laurea", indice: 100.0, immagine: "https://picsum.photos/id/1050/200/200" },
 ];
 
-export default function App()
-{
-  return(
-    <View style={styles.container}>
-    <Text style={styles.testoContainer}>
-    Gioco della sfortuna
-    </Text>
-    <Text style={styles.testoIntro}>
-    Il tema del gioco è: Vita universitaria
-    </Text>
-    <Text style={styles.testoDescrizione}>
-    Inserisci la giusta collocazione delle carte per proseguire,arriva a 6 carte per vincere ma attenzione,puoi commettere solo 3 errori!
-    </Text>
-    <Button title="Inizia il gioco" onPress={() => {}} />
-    </View>
+export default function App() {
+  const [giocoIniziato,setGiocoIniziato]=useState(false);
+  const [carteInGioco,setCarteInGioco]=useState([]);
+
+  const inizioGioco=()=>{
+    const prime=Carte.slice(0, 3);
+    setCarteInGioco(prime);
+    setGiocoIniziato(true);
+  };
+
+  const i1=Math.floor(Math.random()*50);
+  const i2=Math.floor(Math.random()*50);
+  const i3=Math.floor(Math.random()*50);
+
+  if(!giocoIniziato) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.testoContainer}>Gioco della sfortuna</Text>
+        <Text style={styles.testoIntro}>Il tema del gioco è: Vita universitaria</Text>
+        <Text style={styles.testoDescrizione}>
+          Inserisci la giusta collocazione delle carte per proseguire, arriva a 6 carte per vincere ma attenzione, puoi commettere solo 3 errori!
+        </Text>
+        <Button title="Inizia il gioco" onPress={inizioGioco} />
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={styles.giocoContainer}>
+      <Text style={styles.titoloGioco}>Inserisci la carta nella posizione corretta!</Text>
+      
+      <View style={styles.contenitoreBottone}>
+        <Button title="Inserisci qui" onPress={()=>{}}color="green" />
+      </View>
+
+  
+        <View style={styles.posizioneCarta}>
+          
+          <View style={styles.carta}>
+            <Image source={{ uri: Carte[i1].immagine }} style={styles.immagineCarta} />
+            <View style={styles.infoCarta}>
+              <Text style={styles.nomeCarta}>{Carte[i1].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[i1].indice}</Text>
+            </View>
+          </View>
+
+          <View style={styles.contenitoreBottone}>
+            <Button title="Inserisci qui" onPress={() => {}} color="green" />
+          </View>
+
+          <View style={styles.carta}>
+            <Image source={{ uri: Carte[i2].immagine }} style={styles.immagineCarta} />
+            <View style={styles.infoCarta}>
+              <Text style={styles.nomeCarta}>{Carte[i2].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[i2].indice}</Text>
+            </View>
+          </View>
+
+          <View style={styles.contenitoreBottone}>
+            <Button title="Inserisci qui" onPress={() => {}} color="green" />
+          </View>
+
+          <View style={styles.carta}>
+            <Image source={{ uri: Carte[i3].immagine }} style={styles.immagineCarta} />
+            <View style={styles.infoCarta}>
+              <Text style={styles.nomeCarta}>{Carte[i3].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[i3].indice}</Text>
+            </View>
+          </View>
+
+          <View style={styles.contenitoreBottone}>
+            <Button title="Inserisci qui" onPress={() => {}} color="green" />
+          </View>
+
+        </View>
+      )
+
+      <View style={styles.contenitoreIndietro}>
+        <Button title="Torna al menu" onPress={() => setGiocoIniziato(false)} color="red" />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles=StyleSheet.create({
-
-container:{
-  justifyContent:"center",
-  alignItems:"center",
-  flex:1
-},
-testoContainer:{
-  fontSize:30,
-  fontWeight:"bold",
-  textAlign:"center",
-  marginBottom:10
-},
-testoIntro:{
-  fontSize:18,
-  textAlign:"center",
-  marginBottom:25
-},
-testoDescrizione:{
-  fontSize:15,
-  textAlign:"center",
-  marginBottom:36
-
-}
-
-})
+  container:{
+    justifyContent:"center",
+    alignItems:"center",
+    flex:1,
+    padding:20
+  },
+  testoContainer: {
+    fontSize:30,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginBottom:10
+  },
+  testoIntro: {
+    fontSize:18,
+    textAlign:"center",
+    marginBottom:25
+  },
+  testoDescrizione: {
+    fontSize:15,
+    textAlign:"center",
+    marginBottom:36
+  },
+  giocoContainer: {
+    padding:20,
+    paddingTop:60,
+    alignItems:"center"
+  },
+  titoloGioco: {
+    fontSize:24,
+    fontWeight:"bold",
+    marginBottom:20
+  },
+  posizioneCarta: {
+    width:"100%",
+    alignItems:"center"
+  },
+  carta:{
+    flexDirection:"row",
+    backgroundColor:"white",
+    borderRadius:12,
+    padding:12,
+    width:"100%",
+    alignItems:"center",
+    borderWidth:1,
+    borderColor:"black"
+  },
+  immagineCarta: {
+    width:60,
+    height:60,
+    borderRadius:8,
+    marginRight:12
+  },
+  infoCarta: {
+    flex:1
+  },
+  nomeCarta: {
+    fontSize:14,
+    color:"blue",
+    marginBottom:4
+  },
+  indiceCarta: {
+    fontSize:13,
+    fontWeight:"bold",
+    color:"black"
+  },
+  contenitoreBottone: {
+    marginVertical:12,
+    width:"50%"
+  },
+  contenitoreIndietro: {
+    marginTop:30,
+    width:"100%"
+  }
+});

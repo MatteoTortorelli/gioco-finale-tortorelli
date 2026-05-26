@@ -44,7 +44,7 @@ const Carte = [
   { id: 33, nome: "Perdere la chiavetta USB con l'unica copia del progetto finale", indice: 71.0, immagine: "https://picsum.photos/id/611/200/200" },
   { id: 34, nome: "Il portale della borsa di studio va in crash a 5 minuti dalla scadenza", indice: 73.5, immagine: "https://picsum.photos/id/646/200/200" },
   { id: 35, nome: "Trovarsi nel gruppo di studio con l'incompetente della facoltà", indice: 75.0, immagine: "https://picsum.photos/id/660/200/200" },
-  { id: 36, nexus: "Rimanere bloccato nell'ascensore della facoltà prima dell'orale", indice: 77.5, immagine: "https://picsum.photos/id/690/200/200" },
+  { id: 36, nome: "Rimanere bloccato nell'ascensore della facoltà prima dell'orale", indice: 77.5, immagine: "https://picsum.photos/id/690/200/200" },
   { id: 37, nome: "Il professore perde il tuo compito scritto e devi rifarlo", indice: 79.0, immagine: "https://picsum.photos/id/703/200/200" },
   { id: 38, nome: "Mancare il quorum dei crediti per la borsa di studio per 1 CFU", indice: 81.5, immagine: "https://picsum.photos/id/735/200/200" },
   { id: 39, nome: "Prendere 30 e lode ma scoprire che il verbale è stato registrato come 18", indice: 83.0, immagine: "https://picsum.photos/id/765/200/200" },
@@ -66,10 +66,15 @@ export default function App() {
   const [carteInGioco,setCarteInGioco]=useState([]);
   const [errori,setErrori]=useState(0);
   const [contaCarte,setContaCarte]=useState(3);
+  const numeriUsciti=[];
 
   const i1=Math.floor(Math.random()*50);
   const i2=Math.floor(Math.random()*50);
   const i3=Math.floor(Math.random()*50);
+  numeriUsciti[0]=i1;
+  numeriUsciti[1]=i2;
+  numeriUsciti[2]=i3;
+  numeriUsciti.sort((a, b) => a - b);
 
   const inizioGioco=()=>{
     setGiocoIniziato(true);
@@ -78,6 +83,29 @@ export default function App() {
 
   const returnErrori=()=>{return errori};
   const returnCarte=()=>{return contaCarte};
+  function returnCasuale()
+  {
+    let ok=1;
+    let a=0;
+
+    do{
+        a=Math.floor(Math.random()*50);
+
+        for(i=0;i<carteInGioco.length;i++)
+        {
+          if(a==numeriUsciti[i])
+          {
+            ok=0;
+            break;
+          }
+
+        }
+    }
+    while(ok==0)
+
+    return a;
+    
+  }
 
   if(!giocoIniziato) {
     return (
@@ -92,7 +120,50 @@ export default function App() {
     );
   }
 
+  if(errori==3)
+  {
+    return(
+      <View style={styles.containerRisultato}>
+      <Text style={[styles.testoRisultato,{color:"red"}]}>
+      Hai perso!
+      </Text>
+      <Text style={[styles.testoRisultato,{color:"red"}]}>
+      Hai fatto 3 errori e non sei riuscito a raggiungere 6 carte,se vuoi riprovare torna al menù per riavviare una partita
+      </Text>
+      <View style={{marginTop:30}} >
+        <Button title="Torna al menu" onPress={() => setGiocoIniziato(false)} color="green" />
+      </View>
+      </View>
+
+    );
+  }
+  
+  if(contaCarte==6&&errori<3)
+  {
+    return(
+      <View style={styles.containerRisultato}>
+      <Text style={[styles.testoRisultato,{color:"green"}]}>
+      Hai vinto!
+      </Text>
+      <Text style={[styles.testoRisultato,{color:"green"}]}>
+      Hai accumuluato 6 carte senza fare 3 errori,se vuoi riprovare torna al menù per riavviare una partita
+      </Text>
+      <View style={{marginTop:30}} >
+        <Button title="Torna al menu" onPress={() => setGiocoIniziato(false)} color="red" />
+      </View>
+      </View>
+
+    );
+  }
+  
+  
+  
   return (
+
+    
+    
+    
+
     <ScrollView contentContainerStyle={styles.giocoContainer}>
       <Text style={styles.titoloGioco}>Inserisci la carta nella posizione corretta!</Text>
       
@@ -103,10 +174,22 @@ export default function App() {
       </Text>
     
      
-      <Text style={styles.testoInformazioni}>
+      <Text style={[styles.testoInformazioni,{color:"blue"}]}>
       Carte:{returnCarte()}/6
       </Text>
       </View>
+
+      <View style={[styles.carta,{marginTop:20}]}>
+            <Image source={{ uri: Carte[returnCasuale()].immagine }} style={styles.immagineCarta} />
+            <View style={styles.infoCarta}>
+              <Text style={styles.nomeCarta}>{Carte[returnCasuale()].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[returnCasuale()].indice}</Text>
+            </View>
+      </View>
+
+      <Text style={{fontWeight:"bold",fontSize:15,marginBottom:30}}>
+      Inserisci la carta nella posizione giusta
+      </Text>
 
       
 
@@ -120,10 +203,10 @@ export default function App() {
         <View style={styles.posizioneCarta}>
           
           <View style={styles.carta}>
-            <Image source={{ uri: Carte[i1].immagine }} style={styles.immagineCarta} />
+            <Image source={{ uri: Carte[numeriUsciti[0]].immagine }} style={styles.immagineCarta} />
             <View style={styles.infoCarta}>
-              <Text style={styles.nomeCarta}>{Carte[i1].nome}</Text>
-              <Text style={styles.indiceCarta}>Indice: {Carte[i1].indice}</Text>
+              <Text style={styles.nomeCarta}>{Carte[numeriUsciti[0]].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[numeriUsciti[0]].indice}</Text>
             </View>
           </View>
 
@@ -132,10 +215,10 @@ export default function App() {
           </View>
 
           <View style={styles.carta}>
-            <Image source={{ uri: Carte[i2].immagine }} style={styles.immagineCarta} />
+            <Image source={{ uri: Carte[numeriUsciti[1]].immagine }} style={styles.immagineCarta} />
             <View style={styles.infoCarta}>
-              <Text style={styles.nomeCarta}>{Carte[i2].nome}</Text>
-              <Text style={styles.indiceCarta}>Indice: {Carte[i2].indice}</Text>
+              <Text style={styles.nomeCarta}>{Carte[numeriUsciti[1]].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[numeriUsciti[1]].indice}</Text>
             </View>
           </View>
 
@@ -144,10 +227,10 @@ export default function App() {
           </View>
 
           <View style={styles.carta}>
-            <Image source={{ uri: Carte[i3].immagine }} style={styles.immagineCarta} />
+            <Image source={{ uri: Carte[numeriUsciti[2]].immagine }} style={styles.immagineCarta} />
             <View style={styles.infoCarta}>
-              <Text style={styles.nomeCarta}>{Carte[i3].nome}</Text>
-              <Text style={styles.indiceCarta}>Indice: {Carte[i3].indice}</Text>
+              <Text style={styles.nomeCarta}>{Carte[numeriUsciti[2]].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice: {Carte[numeriUsciti[2]].indice}</Text>
             </View>
           </View>
 
@@ -156,7 +239,7 @@ export default function App() {
           </View>
 
         </View>
-      )
+      
 
       <View style={styles.contenitoreIndietro}>
         <Button title="Torna al menu" onPress={() => setGiocoIniziato(false)} color="red" />
@@ -197,7 +280,9 @@ const styles=StyleSheet.create({
   titoloGioco: {
     fontSize:24,
     fontWeight:"bold",
-    marginBottom:20
+    marginBottom:20,
+    color:"purple",
+    textAlign:"center"
   },
   posizioneCarta: {
     width:"100%",
@@ -249,5 +334,15 @@ const styles=StyleSheet.create({
     fontSize:15,
     marginLeft:20,
     marginRight:20
+  },
+  containerRisultato:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  testoRisultato:{
+    fontWeight:"bold",
+    fontSize:30,
+    textAlign:"center"
   }
 });

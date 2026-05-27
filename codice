@@ -107,6 +107,15 @@ export default function App() {
     
   }
 
+  function controllo({indiceCartaNuova,indice2})
+  {
+    if(Number(indiceCartaNuova)>Number(indice2))
+    {
+      setErrori(errori=>errori+1)
+    }
+    
+  }
+
   if(!giocoIniziato) {
     return (
       <View style={styles.container}>
@@ -122,7 +131,11 @@ export default function App() {
 
   if(errori==3)
   {
+    
+    
     return(
+      
+
       <View style={styles.containerRisultato}>
       <Text style={[styles.testoRisultato,{color:"red"}]}>
       Hai perso!
@@ -136,6 +149,10 @@ export default function App() {
       </View>
 
     );
+
+    setErrori(errori>=0);
+
+    
   }
   
   if(contaCarte==6&&errori<3)
@@ -195,9 +212,13 @@ export default function App() {
 
 
 
-      <View style={styles.contenitoreBottone}>
-        <Button title="Inserisci qui" onPress={()=>{}}color="green" />
-      </View>
+     <View style={styles.contenitoreBottone}>
+  <Button
+    title="Inserisci qui"
+    onPress={() => controllo({ indiceCartaNuova: Carte[returnCasuale()].indice, indice2: Carte[0].indice })}
+    color="green"
+  />
+</View>
      
   
         <View style={styles.posizioneCarta}>

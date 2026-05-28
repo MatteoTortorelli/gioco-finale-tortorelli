@@ -94,7 +94,7 @@ export default function App() {
   setGiocoIniziato(true);
   setIndice(returnCasuale());
   setErrori(errori=>0);
-  setContaCarte(contaCarte=>0);
+  setContaCarte(contaCarte=>3);
   };
 
   const returnErrori=()=>{return errori};

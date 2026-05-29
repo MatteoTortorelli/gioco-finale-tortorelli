@@ -1,0 +1,552 @@
+/** 
+ * @module codice.js
+ * @file Gioco della sfortuna
+ * @author Matteo Tortorelli
+ * @description Inserisci la giusta collocazione delle carte per proseguire,arriva a 6 carte per vincere ma attenzione,puoi commettere solo 3 errori!
+ * @version  29/05/2026
+ * 
+*/
+
+import React, { useState } from 'react';
+import {
+  Text,
+  Image,
+  View,
+  StyleSheet,
+  Button,
+  ScrollView
+} from 'react-native';
+/**
+ * @typedef {Object} Carta
+ * @property {number} id-Identificativo della carta
+ * @property {string} nome-Nome della carta
+ * @property {number} indice-Indice di sfortuna della carta
+ * @property {string} immagine-Indirizzo link dell'immagine della carta
+ */
+const Carte = [
+  { id: 1, nome: "Finisce l'inchiostro dell'evidenziatore preferito", indice: 2.0,
+    immagine: "https://images.unsplash.com/photo-1580569214296-5cf2bffc5ccd?w=200&h=200&fit=crop" },
+  { id: 2, nome: "La macchinetta del caffè non dà il resto", indice: 4.5,
+    immagine: "https://images.unsplash.com/photo-1625650484478-113df4bfc370?w=200&h=200&fit=crop" },
+  { id: 3, nome: "Arrivare a lezione e scoprire che è stata rimandata", indice: 6.0,
+    immagine: "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=200&h=200&fit=crop" },
+  { id: 4, nome: "Trovare l'unico posto in biblioteca con la presa elettrica rotta", indice: 8.5,
+    immagine: "https://images.unsplash.com/photo-1565049981953-379c9c2a5d48?w=200&h=200&fit=crop" },
+  { id: 5, nome: "Sbagliare aula e seguire 2 ore di una materia non tua", indice: 11.0,
+    immagine: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=200&h=200&fit=crop" },
+  { id: 6, nome: "Dimenticare i tappi per le orecchie prima di studiare in aula comune", indice: 13.5,
+    immagine: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=200&h=200&fit=crop" },
+  { id: 7, nome: "Il professore parla a bassissimo volume e non si sente nulla", indice: 15.0,
+    immagine: "https://images.unsplash.com/photo-1594122230689-45899d9e6f69?w=200&h=200&fit=crop" },
+  { id: 8, nome: "Comprare il libro di testo sbagliato (stesso titolo, altra edizione)", indice: 17.5,
+    immagine: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200&h=200&fit=crop" },
+  { id: 9, nome: "Perdere la penna fortunata il giorno dell'esame", indice: 19.0,
+    immagine: "https://images.unsplash.com/photo-1606326608690-4e0281b1e588?w=200&h=200&fit=crop" },
+  { id: 10, nome: "La connessione Wi-Fi d'ateneo cade mentre cerchi una slide", indice: 21.5,
+    immagine: "https://images.unsplash.com/photo-1529111316-da2e2a1e625d?w=200&h=200&fit=crop" },
+  { id: 11, nome: "Incontrare l'ex nei corridoi del dipartimento", indice: 23.0,
+    immagine: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=200&h=200&fit=crop" },
+  { id: 12, nome: "Il tuo compagno di progetto sparisce nel nulla a 3 giorni dalla consegna", indice: 25.5,
+    immagine: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=200&fit=crop" },
+  { id: 13, nome: "Prendere 17 all'esame più difficile del corso", indice: 28.0,
+    immagine: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=200&h=200&fit=crop" },
+  { id: 14, nome: "Far cadere il badge universitario nella tromba dell'ascensore", indice: 30.5,
+    immagine: "https://corrieredinovara.it/media/2018/05/Tromba-dellascensore.jpg" },
+  { id: 15, nome: "Lo studente seduto accanto a te mastica la gomma rumorosamente", indice: 32.0,
+    immagine: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=200&h=200&fit=crop" },
+  { id: 16, nome: "Il professore cambia le modalità d'esame una settimana prima", indice: 34.5,
+    immagine: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk0Z4y2eGMF8EcGu-qHTN4HOtJvs0hSu5Ekw&s" },
+  { id: 17, nome: "Rimanere chiuso fuori dalla biblioteca con la borsa dentro", indice: 36.0,
+    immagine: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=200&h=200&fit=crop" },
+  { id: 18, nome: "Piove a dirotto e hai dimenticato l'ombrello a casa", indice: 38.5,
+    immagine: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=200&h=200&fit=crop" },
+  { id: 19, nome: "Sbagliare l'orario del treno dei pendolari di 2 minuti", indice: 40.0,
+    immagine: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=200&h=200&fit=crop" },
+  { id: 20, nome: "Le slide del professore sono scritte in Comic Sans e sfondo giallo", indice: 42.5,
+    immagine: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&h=200&fit=crop" },
+  { id: 21, nome: "Trovare tutti i tavoli della mensa occupati", indice: 45.0,
+    immagine: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=200&h=200&fit=crop" },
+  { id: 22, nome: "Dover fare una presentazione di gruppo da solo perché gli altri sono malati", indice: 47.5,
+    immagine: "https://images.unsplash.com/photo-1560439514-4e9645039924?w=200&h=200&fit=crop" },
+  { id: 23, nome: "Essere interrogato per primo all'appello orale", indice: 49.0,
+    immagine: "https://www.younipa.it/wp-content/uploads/2022/05/blogdicultura_e95619caf87f7fce8a71b6a4f5aa53a7-e1523106398429-750x400-1.jpg" },
+  { id: 24, nome: "Versarsi il caffè caldo sui riassunti stampati la mattina stessa", indice: 51.5,
+    immagine: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&h=200&fit=crop" },
+  { id: 25, nome: "Il pc si spegne per aggiornamento Windows durante l'esame online", indice: 54.0,
+    immagine: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=200&h=200&fit=crop" },
+  { id: 26, nome: "Il professore rifiuta la tua bozza di tesi per la terza volta consecutiva", indice: 56.5,
+    immagine: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&h=200&fit=crop" },
+  { id: 27, nome: "Domanda d'esame basata sull'unica pagina che hai saltato", indice: 58.0,
+    immagine: "https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?w=200&h=200&fit=crop" },
+  { id: 28, nome: "Svegliarsi un'ora dopo l'inizio dello scritto", indice: 60.5,
+    immagine: "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=200&h=200&fit=crop" },
+  { id: 29, nome: "Iscrizioni all'appello chiuse in anticipo per un bug del portale", indice: 63.0,
+    immagine: "https://media.istockphoto.com/id/155384933/it/foto/finestra-di-errore.jpg?s=612x612&w=0&k=20&c=xUzfZcdziLTsX47VKKdBQZX-L_RWr0xpGyX4h8Rd6NY=" },
+  { id: 30, nome: "Accendere il microfono per sbaglio su Teams mentre insulti l'esame", indice: 65.5,
+    immagine: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=200&h=200&fit=crop" },
+  { id: 31, nome: "Essere bocciato all'ultimo esame prima della laurea", indice: 67.0,
+    immagine: "https://adolescienza.it/storage/2025/06/bocciatura.jpg" },
+  { id: 32, nome: "Il coinquilino organizza una festa la notte prima del tuo esame", indice: 69.5,
+    immagine: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=200&h=200&fit=crop" },
+  { id: 33, nome: "Perdere la chiavetta USB con l'unica copia del progetto finale", indice: 71.0,
+    immagine: "https://images.unsplash.com/photo-1610056494052-6a4f83a8368c?w=200&h=200&fit=crop" },
+  { id: 34, nome: "Il portale della borsa di studio va in crash a 5 minuti dalla scadenza", indice: 73.5,
+    immagine: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945?w=200&h=200&fit=crop" },
+  { id: 35, nome: "Trovarsi nel gruppo di studio con l'incompetente della facoltà", indice: 75.0,
+    immagine: "https://thumbs.dreamstime.com/b/emarginazione-sociale-un-gruppo-di-persone-giovani-emarginati-si-distinguono-da-sullo-sfondo-la-societ%C3%A0-umilia-e-disonora-una-184137760.jpg" },
+  { id: 36, nome: "Rimanere bloccato nell'ascensore della facoltà prima dell'orale", indice: 77.5,
+    immagine: "https://www.tieffesrl.com/wp-content/uploads/2023/04/ascensore-bloccato-cosa-fare.jpg" },
+  { id: 37, nome: "Il professore perde il tuo compito scritto e devi rifarlo", indice: 79.0,
+    immagine: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=200&h=200&fit=crop" },
+  { id: 38, nome: "Mancare il quorum dei crediti per la borsa di studio per 1 CFU", indice: 81.5,
+    immagine: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=200&h=200&fit=crop" },
+  { id: 39, nome: "Prendere 30 e lode ma scoprire che il verbale è stato registrato come 18", indice: 83.0,
+    immagine: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=200&h=200&fit=crop" },
+  { id: 40, nome: "Staccarsi la suola della scarpa mentre corri per non perdere l'appello", indice: 85.5,
+    immagine: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&h=200&fit=crop" },
+  { id: 41, nome: "Cancellare per errore l'intero database del progetto di programmazione", indice: 87.0,
+    immagine: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=200&h=200&fit=crop" },
+  { id: 42, nome: "Il relatore va in pensione a un mese dalla tua laurea", indice: 89.5,
+    immagine: "https://static9.depositphotos.com/1518767/1085/i/950/depositphotos_10852943-stock-photo-retired-man-drinking-a-cocktail.jpg" },
+  { id: 43, nome: "Blocco totale del cervello alla prima domanda davanti alla commissione", indice: 91.0,
+    immagine: "https://images.unsplash.com/photo-1557989048-03456d01a26e?w=200&h=200&fit=crop" },
+  { id: 44, nome: "Sbagliare il giorno dell'esame e presentarsi una settimana dopo", indice: 92.5,
+    immagine: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=200&h=200&fit=crop" },
+  { id: 45, nome: "Rovesciare l'intera schiscetta di pasta al sugo sul laptop nuovo", indice: 94.0,
+    immagine: "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=200&h=200&fit=crop" },
+  { id: 46, nome: "Scoprire che mancano 2 esami extra che non avevi inserito nel piano di studi", indice: 95.5,
+    immagine: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=200&h=200&fit=crop" },
+  { id: 47, nome: "L'allarme antincendio scatta durante l'esame che stavi per superare", indice: 96.5,
+    immagine: "https://images.unsplash.com/photo-1596522354195-e84ae3c98731?w=200&h=200&fit=crop" },
+  { id: 48, nome: "La segreteria studenti perde tutti i tuoi dati di immatricolazione", indice: 97.5,
+    immagine: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSddgEIRHTDU6P1JsiE1ze90XKO1hs2iPM_dQ&s" },
+  { id: 49, nome: "Farsi annullare la tesi il giorno prima della consegna per presunto plagio", indice: 98.5,
+    immagine: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=200&h=200&fit=crop" },
+  { id: 50, nome: "Svegliarsi con la febbre a 40 il giorno della proclamazione di laurea", indice: 100.0,
+    immagine: "https://images.unsplash.com/photo-1583947581879-41e4c88394c3?w=200&h=200&fit=crop" },
+];
+
+/**
+ *  @function App
+   * @description Funzione App,contiene tutte le variabili necessarie per gestire il gioco e le funzioni peril funzionamento corretto del gioco
+   * @returns Il gioco 
+   */
+export default function App() {
+
+  
+/**
+ * Valore booleano che indica se il gioco è iniziato.
+ * @type {boolean}
+ */
+const [giocoIniziato,setGiocoIniziato]=useState(false);
+
+/**
+ * Le carte che sono in gioco.
+ * @type {Array<Object>}
+ */
+const [carteInGioco,setCarteInGioco]=useState([]);
+
+/**
+ * Numero di errori commessi dal giocatore,il limite massimo è 3.
+ * @type {number}
+ */
+const [errori,setErrori]=useState(0);
+
+/**
+ * Numero di carte presenti nel mazzo,si parte da 3 carte,se si raggiungono 6 carte si vince.
+ * @type {number}
+ */
+const [contaCarte,setContaCarte]=useState(3);
+
+/**
+ * Array degli indici delle carte già uscite,serve per evitare che una carta esca più di una volta.
+ * @type {number}
+ */
+const [numeriUsciti,setNumeriUsciti]=useState([]);
+
+/**
+ * Indice della carta data al giocatoreda inserire nel mazzo,viene aggiornato ogni voltacon un numero casuale evitando quelli già usciti.
+ * @type {number}
+ */
+const [indice,setIndice]=useState(0);
+  
+/**
+ * @function inizioGioco
+ * @description Funzione che inizializza tutte le variabili necessarie peril gioco,estrae 3 carte casuali evitando ripetizioni e le ordinain ordine crescente in base al loro indice di sfortuna,imposta gli errori a 0 e le carte a 3 ogni volta che si ricomincia la partita.
+ */ 
+
+  const inizioGioco=()=>{
+    const i1=Math.floor(Math.random()*50);
+    let i2,i3;
+    do
+    { 
+      i2=Math.floor(Math.random()*50);
+    }
+    while(i2==i1);
+
+
+    do 
+    { 
+      i3=Math.floor(Math.random()*50);
+    }
+    while(i3==i1||i3==i2);
+
+  const nuovi=[i1, i2, i3].sort((a, b)=>Carte[a].indice-Carte[b].indice);
+  setNumeriUsciti(nuovi);
+  setCarteInGioco([Carte[i1],Carte[i2],Carte[i3]]);
+  setGiocoIniziato(true);
+  setIndice(returnCasuale());
+  setErrori(errori=>0);
+  setContaCarte(contaCarte=>3);
+  };
+
+  /**
+   * @function returnErrori
+   * @description Funzione che restituisce il numero di errori commessi dal giocatore,serve per aggiornare il contatore degli errori durante la partita.
+   * @returns {number} errori- I numeri di errori commessi dal giocatore.
+   * 
+   */
+  const returnErrori=()=>{return errori};
+
+  /**
+   * @function returnCarte
+   * @description Funzione che restituisce il numero di carte presenti nel mazzo,serve per aggiornare il contatore delle carte durante la partita.
+   * @returns {number} contaCarte- Il numero di carte presenti nel mazzo.
+   * 
+   */
+  const returnCarte=()=>{return contaCarte};
+  
+  /**
+   * @function returnCasuale
+   * @description Funzione che restituisce un numero casuale tra 0 e 49 evitando quelli già usciti,serve per dare l'indice della carta da inserire nel mazzo durante la partita.
+   * @returns {number} a-Il numero casuale della carta da inserire.
+   * 
+   */
+
+
+  function returnCasuale()
+  {
+    let ok=1;
+    let a=0;
+    do
+    {
+        a=Math.floor(Math.random()*50);
+        ok=1;
+        for(i=0;i<carteInGioco.length;i++)
+        {
+          if(a==numeriUsciti[i])
+          {
+            ok=0;
+            break;
+           }
+        }
+    }
+    while(ok==0)
+
+    return a;
+  }
+
+/**
+ * @function aggiungiCarta
+ * @description Funzione che aggiunge la carta data al giocatore nella posizione scelta,controlla se la posizione è corretta in base all'indice di sfortuna della carta,aggiorna il numero di errori e carte presenti nel mazzo in base all'esito del controllo,aggiorna l'indice della carta da inserire con un nuovo numero casuale evitando quelli già usciti.
+ * @param {number} posizione- La posizione dove si vuole inserire la carta.
+ * 
+ */
+
+function aggiungiCarta(posizione){
+const nuova=Carte[indice].indice;
+
+if((posizione==0&&nuova<Carte[numeriUsciti[0]].indice)||(posizione==numeriUsciti.length&&nuova>Carte[numeriUsciti[numeriUsciti.length-1]].indice)||(posizione>0&&posizione<numeriUsciti.length&&nuova>Carte[numeriUsciti[posizione-1]].indice&&nuova<Carte[numeriUsciti[posizione]].indice)
+)
+{
+const arr=[...numeriUsciti];
+arr.splice(posizione,0,indice);
+setNumeriUsciti(numeriUsciti=>arr);
+setContaCarte(contaCarte=>contaCarte+1);
+}
+
+else
+setErrori(errori=>errori+1);
+
+
+setIndice(returnCasuale());
+}
+
+/**
+ * Controlla se il gioco è iniziato attraverso la variabile booleana dichiarata prima,se non è iniziata mostra la schermata iniziale.
+*/
+
+
+  if(!giocoIniziato) {
+    
+    return (
+      <View style={styles.container}>
+        <Text style={styles.testoContainer}>Gioco della sfortuna</Text>
+        <Text style={styles.testoIntro}>Il tema del gioco è: Vita universitaria</Text>
+        <Text style={styles.testoDescrizione}>
+          Inserisci la giusta collocazione delle carte per proseguire, arriva a 6 carte per vincere ma attenzione, puoi commettere solo 3 errori!
+        </Text>
+        <Button title="Inizia il gioco" onPress={inizioGioco} />
+
+        <View style={[styles.carta,{marginTop:20}]}>
+            <Image source={{uri:Carte[41].immagine}}style={styles.immagineCarta} />
+        </View>
+        
+      </View>
+
+     
+    );
+
+  }
+
+  /**
+ * Controlla se il giocatore ha commesso 3 errori,in caso mostra la schermata di sconfita proponendo un' altra partita.
+*/
+  
+  if(errori==3)
+  {
+    return(
+      
+
+      <View style={styles.containerRisultato}>
+      <Text style={[styles.testoRisultato,{color:"red"}]}>
+      Hai perso!
+      </Text>
+      <Text style={[styles.testoRisultato,{color:"red"}]}>
+      Hai fatto 3 errori e non sei riuscito a raggiungere 6 carte,se vuoi riprovare torna al menù per riavviare una partita
+      </Text>
+      <View style={{marginTop:30}} >
+        <Button title="Torna al menu" onPress={()=>setGiocoIniziato(false)} color="green" />
+      </View>
+      </View>
+
+    );
+
+  }
+  /**
+ * Controlla se il giocatore ha raggiunto 6 carte senza commettere 3 errori,in caso mostra la schermata di vittoria proponendo un altra partita..
+*/
+  if(contaCarte==6&&errori<3)
+  {
+    return(
+      <View style={styles.containerRisultato}>
+      <Text style={[styles.testoRisultato,{color:"green"}]}>
+      Hai vinto!
+      </Text>
+      <Text style={[styles.testoRisultato,{color:"green"}]}>
+      Hai accumuluato 6 carte senza fare 3 errori,se vuoi riprovare torna al menù per riavviare una partita
+      </Text>
+      <View style={{marginTop:30}} >
+        <Button title="Torna al menu" onPress={() => setGiocoIniziato(false)} color="red" />
+      </View>
+      </View>
+
+    );
+  }
+  
+/**
+ * La parte principale,mostra tutte le carte con i bottoni e le aggiunge la carte attraverso map.
+ */
+
+  return (
+
+    <ScrollView contentContainerStyle={styles.giocoContainer}>
+      <Text style={styles.titoloGioco}>Inserisci la carta nella posizione corretta!</Text>
+      
+       
+      <View style={styles.informazioni}>
+      <Text style={[styles.testoInformazioni,{color:"red"}]}>
+      Errori:{returnErrori()}/3
+      </Text>
+    
+     
+      <Text style={[styles.testoInformazioni,{color:"blue"}]}>
+      Carte:{returnCarte()}/6
+      </Text>
+      </View>
+
+      <View style={[styles.carta,{marginTop:20}]}>
+            <Image source={{uri:Carte[indice].immagine}}style={styles.immagineCarta} />
+            <View style={styles.infoCarta}>
+              <Text style={styles.nomeCarta}>{Carte[indice].nome}</Text>
+              <Text style={styles.indiceCarta}>Indice:?</Text>
+            </View>
+      </View>
+
+      <Text style={{fontWeight:"bold",fontSize:15,marginBottom:30}}>
+      Inserisci la carta nella posizione giusta
+      </Text>
+      
+      <View style={styles.contenitoreBottone}>
+  <Button title="Inserisci qui" onPress={()=>aggiungiCarta(0)} color="green" />
+</View>
+      
+     {numeriUsciti.map((indice,i)=>(
+    <View key={i} style={{width:"100%",alignItems:"center"}}>
+      <View style={styles.carta}>
+        <Image source={{ uri:Carte[indice].immagine}} style={styles.immagineCarta} />
+        <View style={styles.infoCarta}>
+          <Text style={styles.nomeCarta}>{Carte[indice].nome}</Text>
+          <Text style={styles.indiceCarta}>Indice: {Carte[indice].indice}</Text>
+        </View>
+      </View>
+      <View style={styles.contenitoreBottone}>
+        <Button title="Inserisci qui" onPress={()=>aggiungiCarta(i+1)} color="green" />
+      </View>
+    </View>
+  ))}
+
+  <View style={styles.contenitoreIndietro}>
+  <Button title="Torna al menu" onPress={()=>setGiocoIniziato(false)} color="red" />
+</View>
+    </ScrollView>
+  );
+}
+
+const styles=StyleSheet.create({
+  container:{
+    /**
+     * Contenitore principale della schermata iniziale che centra tutto.
+     */
+    justifyContent:"center",
+    alignItems:"center",
+    flex:1,
+    padding:20,
+    
+  },
+  testoContainer: {
+    /**
+     * Stile del titolo principale del gioco con testo grande,in grassetto e centrato.
+     */
+    fontSize:30,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginBottom:10
+  },
+  testoIntro: {
+    /**
+     * Stile del testo introduttivo più piccolo del titolo,centrato anche lui.
+     */
+    fontSize:18,
+    textAlign:"center",
+    marginBottom:25
+  },
+  testoDescrizione: {
+    /**
+     * Descrizione del gioco,più piccolo e leggibile
+     */
+    fontSize:15,
+    textAlign:"center",
+    marginBottom:36
+  },
+  giocoContainer: {
+    /**
+     * Contenitore principale della schermata di gioco che allinea tutto al centro.
+     */
+    padding:20,
+    paddingTop:60,
+    alignItems:"center",
+  },
+  titoloGioco: {
+    /**
+     * Titolo della schermata di gioco in grande e in grassetto e colorato di viola.
+     */
+    fontSize:24,
+    fontWeight:"bold",
+    marginBottom:20,
+    color:"purple",
+    textAlign:"center"
+  },
+  posizioneCarta: {
+    /**
+     * Contenitore per la posizione della carta che centra tutto.
+     */
+    width:"100%",
+    alignItems:"center"
+  },
+  carta:{
+    /** Contenitore per la carta che mette indice immagine e descrizione in ordine.
+ */
+    flexDirection:"row",
+    backgroundColor:"white",
+    borderRadius:12,
+    padding:12,
+    width:"100%",
+    alignItems:"center",
+    borderWidth:1,
+    borderColor:"black"
+  },
+  immagineCarta: {
+    /**
+     *Determina la grandezza dell'immagine della carta.
+     */
+    width:60,
+    height:60,
+    borderRadius:8,
+    marginRight:12
+  },
+  infoCarta: {
+    /**
+     * Contenitore delle informazioni della carta.
+     */
+    flex:1
+  },
+  nomeCarta: {
+    /**
+     * Nome della carta in blu.*/
+    fontSize:14,
+    color:"blue",
+    marginBottom:4
+  },
+  indiceCarta: {
+    /**
+     * Indice di sfortuna della carta,nero in grassetto e più piccolo*/
+    fontSize:13,
+    fontWeight:"bold",
+    color:"black"
+  },
+  contenitoreBottone: {
+    /**
+     * Contenitore dei bottoni "Inserisci qui".
+     */
+    marginVertical:12,
+    width:"50%"
+  },
+  contenitoreIndietro: {
+    /**
+     * Contenitore del bottone per tornare al menu.*/
+    marginTop:30,
+    width:"100%"
+  },
+  informazioni:{
+    /**
+     * Contatore degli errori e delle carte presenti nel mazzo,disposti uno affianco all'altro.
+     */
+    flexDirection:"row",
+  },
+  testoInformazioni:
+  {
+    /**
+     * Testo delle informazioni di gioco in grassetto.
+     */
+    fontWeight:"bold",
+    fontSize:15,
+    marginLeft:20,
+    marginRight:20
+  },
+  containerRisultato:{
+    /**
+     * Schermata finale vittoria o sconfitta,centra tutto.
+     */
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  testoRisultato:{
+    /**
+     * Testo della schermata finale,grande, in grassetto e centrato
+     */
+    fontWeight:"bold",
+    fontSize:30,
+    textAlign:"center"
+  }});

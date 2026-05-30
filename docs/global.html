@@ -303,7 +303,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line253">line 253</a>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line258">line 258</a>
     </li></ul></dd>
     
 
@@ -391,7 +391,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line177">line 177</a>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -479,7 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line215">line 215</a>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line220">line 220</a>
     </li></ul></dd>
     
 
@@ -589,7 +589,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line223">line 223</a>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -699,7 +699,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line207">line 207</a>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line212">line 212</a>
     </li></ul></dd>
     
 
@@ -806,7 +806,7 @@
 
         <tr>
             
-                <td class="name"><code>id-Identificativo</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
@@ -822,14 +822,14 @@
 
             
 
-            <td class="description last"><p>della carta</p></td>
+            <td class="description last"><p>Identificativo della carta</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nome-Nome</code></td>
+                <td class="name"><code>nome</code></td>
             
 
             <td class="type">
@@ -845,14 +845,14 @@
 
             
 
-            <td class="description last"><p>della carta</p></td>
+            <td class="description last"><p>Nome della carta</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>indice-Indice</code></td>
+                <td class="name"><code>indice</code></td>
             
 
             <td class="type">
@@ -868,14 +868,14 @@
 
             
 
-            <td class="description last"><p>di sfortuna della carta</p></td>
+            <td class="description last"><p>Indice di sfortuna della carta</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>immagine-Indirizzo</code></td>
+                <td class="name"><code>immagine</code></td>
             
 
             <td class="type">
@@ -891,7 +891,7 @@
 
             
 
-            <td class="description last"><p>link dell'immagine della carta</p></td>
+            <td class="description last"><p>Indirizzo link dell'immagine della carta</p></td>
         </tr>
 
     
@@ -947,6 +947,864 @@
 
 
             
+                
+<h4 class="name" id="CarteInGioco">CarteInGioco</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>carteInGioco</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#Carta">Carta</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array delle carte presenti nel mazzo</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setCarteInGioco</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare le carte in gioco</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line145">line 145</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="IndiceCasuale">IndiceCasuale</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>indice</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Indice della carta data al giocatore da inserire nel mazzo,viene aggiornato ogni volta con un numero casuale evitando quelli già usciti.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setIndice</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare l'indice della carta da inserire.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line175">line 175</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="NumeriUsciti">NumeriUsciti</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>numeriUsciti</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array degli indici delle carte già uscite,serve per evitare di estrarre carte già presenti nel mazzo.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setNumeriUsciti</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare gli indici delle carte già uscite.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line167">line 167</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="NumeroCarte">NumeroCarte</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contaCarte</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Contatore del numero di carte presenti nel mazzo,si parte da 3 carte,se si raggiungono 6 carte si vince.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setContaCarte</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare il contatore delle carte.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line160">line 160</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="NumeroErrori">NumeroErrori</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>errori</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Contatore del numero di errori commessi dal giocatore,il limite massimo è 3.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setErrori</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare il contatore degli errori.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line152">line 152</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="StatoGioco">StatoGioco</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>setGiocoIniziato</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Setter per aggiornare giocoIniziato.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>giocoIniziato</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Valore booleano che indica se il gioco è iniziato o meno,serve per mostrare la schermata iniziale o quella di gioco.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="codice.js.html">codice.js</a>, <a href="codice.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
     
 
     
@@ -966,7 +1824,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri May 29 2026 23:29:56 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 16:22:53 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>

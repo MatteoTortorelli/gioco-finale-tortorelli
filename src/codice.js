@@ -2,8 +2,8 @@
  * @module codice.js
  * @file Gioco della sfortuna
  * @author Matteo Tortorelli
- * @description Inserisci la giusta collocazione delle carte per proseguire,arriva a 6 carte per vincere ma attenzione,puoi commettere solo 3 errori!
- * @version  29/05/2026
+ * @description Il codice del gioco della sfortuna,comprende la parte logica e grafica.
+ * @version 29/05/2026
  * 
 */
 
@@ -18,10 +18,10 @@ import {
 } from 'react-native';
 /**
  * @typedef {Object} Carta
- * @property {number} id-Identificativo della carta
- * @property {string} nome-Nome della carta
- * @property {number} indice-Indice di sfortuna della carta
- * @property {string} immagine-Indirizzo link dell'immagine della carta
+ * @property {number} id -Identificativo della carta
+ * @property {string} nome -Nome della carta
+ * @property {number} indice -Indice di sfortuna della carta
+ * @property {string} immagine -Indirizzo link dell'immagine della carta
  */
 const Carte = [
   { id: 1, nome: "Finisce l'inchiostro dell'evidenziatore preferito", indice: 2.0,
@@ -133,41 +133,50 @@ const Carte = [
    */
 export default function App() {
 
-  
-/**
- * Valore booleano che indica se il gioco è iniziato.
- * @type {boolean}
+  /**
+ * @typedef {Object} StatoGioco
+ * @property {function(boolean): void} setGiocoIniziato - Setter per aggiornare giocoIniziato.
+ * @property {boolean} giocoIniziato -Valore booleano che indica se il gioco è iniziato o meno,serve per mostrare la schermata iniziale o quella di gioco.
  */
+
 const [giocoIniziato,setGiocoIniziato]=useState(false);
 
+
 /**
- * Le carte che sono in gioco.
- * @type {Array<Object>}
+ * @typedef {Object} CarteInGioco
+ * @property {Carta[]} carteInGioco - Array delle carte presenti nel mazzo
+ * @property {function(Carta[]): void} setCarteInGioco - Setter per aggiornare le carte in gioco
  */
 const [carteInGioco,setCarteInGioco]=useState([]);
 
 /**
- * Numero di errori commessi dal giocatore,il limite massimo è 3.
- * @type {number}
+ * @typedef {Object} NumeroErrori
+ * @property {number} errori -Contatore del numero di errori commessi dal giocatore,il limite massimo è 3.
+ * @property {function(number): void} setErrori - Setter per aggiornare il contatore degli errori.
  */
 const [errori,setErrori]=useState(0);
 
+
 /**
- * Numero di carte presenti nel mazzo,si parte da 3 carte,se si raggiungono 6 carte si vince.
- * @type {number}
+ * @typedef {Object} NumeroCarte
+ * @property {number} contaCarte -Contatore del numero di carte presenti nel mazzo,si parte da 3 carte,se si raggiungono 6 carte si vince.
+ * @property {function(number): void} setContaCarte - Setter per aggiornare il contatore delle carte.
  */
 const [contaCarte,setContaCarte]=useState(3);
 
 /**
- * Array degli indici delle carte già uscite,serve per evitare che una carta esca più di una volta.
- * @type {number}
+ * @typedef {Object} NumeriUsciti
+ * @property {array} numeriUsciti -Array degli indici delle carte già uscite,serve per evitare di estrarre carte già presenti nel mazzo.
+ * @property {function(number): void} setNumeriUsciti - Setter per aggiornare gli indici delle carte già uscite.
  */
 const [numeriUsciti,setNumeriUsciti]=useState([]);
 
+
 /**
- * Indice della carta data al giocatoreda inserire nel mazzo,viene aggiornato ogni voltacon un numero casuale evitando quelli già usciti.
- * @type {number}
- */
+ * @typedef {Object} IndiceCasuale
+ * @property {number} indice -Indice della carta data al giocatore da inserire nel mazzo,viene aggiornato ogni volta con un numero casuale evitando quelli già usciti.
+ * @property {function(number): void} setIndice - Setter per aggiornare l'indice della carta da inserire.
+*/
 const [indice,setIndice]=useState(0);
   
 /**
